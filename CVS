@@ -1,0 +1,10 @@
+CVS (Comma Seperated Values)
+
+
+A way of sending data through comma charts. ie
+
+asdsad,  asdasdam, asdasdad,  (Header)
+asdasd, asdads,sadad,         (Data)
+      ^ 
+      |
+Each comma indicates a new "cell."
