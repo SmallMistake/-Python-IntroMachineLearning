@@ -1,4 +1,12 @@
-###Import Statements
+"""A complied version of the code between pages 40-50ish. Changes have been made, like how the code is loaded.
+    Parts:
+        *Feed in data
+        *Analyze data
+        *Stratify data based on important attribute  #This is better than random choice, because it makes the set more representative of the population.
+"""
+
+
+##Import Statements
 import sys
 import csv
 import os
@@ -26,7 +34,7 @@ print(housing["ocean_proximity"].value_counts())
 
 
 #Spliting the dataset based on median housing prices
-housing["income_cat"] = np.ceil(housing["median_income"] / 1.5)              #ceil:aka:ceiling
+housing["income_cat"] = np.ceil(housing["median_income"] / 1.5)              #ceil: aka: ceiling: round up
 housing["income_cat"].where(housing["income_cat"] < 5, 5.0, inplace=True)
 #housing["income_cat"].hist(bins=10, figsize=(20,15))
 #plt.show()
