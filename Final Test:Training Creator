@@ -3,6 +3,7 @@
         *Feed in data
         *Analyze data
         *Stratify data based on important attribute  #This is better than random choice, because it makes the set more representative of the population.
+        *Use on the training set.
 """
 
 
@@ -59,3 +60,7 @@ for set_ in (strat_train_set, strat_test_set):
 print("")
 print("Final Training set")
 print(strat_train_set)
+
+
+#Copy the training set to use it.
+housing = strat_train_set.copy()
