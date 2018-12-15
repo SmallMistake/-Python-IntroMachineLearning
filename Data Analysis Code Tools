@@ -1,0 +1,10 @@
+#Some data analysis tools.
+
+Shorten mathplotlib.pyplot as plt
+
+hist():
+ Can include(bins = #, figsize = (20,15))
+
+You must use plt.show().
+
+.values_counts() is good for analyzing catagories a variable might have.
