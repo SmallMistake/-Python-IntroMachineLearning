@@ -1,0 +1,37 @@
+#Use about 20 percent.
+#Randomly creating sets like below is not good because it can lead to new test sets each time.
+#
+
+#####Page 49
+import numpy as np
+
+def split_train_test(data, test_ratio):
+  #np.random.seed(42)                                      # Example seed setting. Still not the best as new data will change the batch.
+  shuffled_indices = np.random.permutation(len(data))      # Remember if not seeded it will create a new test set
+  test_set_size = int(len(data) * test_ratio)
+  test_indices = shuffled_ indices[:test_set_size]
+  train_indices = shuffled_indices[test_set_size:]
+  return data.iloc[train_indices],data.iloc[test_indices]  # Returns test set created on 11 and training set on 12.
+######
+#Using this set.
+
+train_set, test_set = split_train_test(housing,0.2)        # Replace housing with your dataset
+print(len(train_set), "train +", len(test_set), "test")
+
+##### Page 50
+#Using Hash Identifiers
+
+import hashlib
+
+def test_set_check(identifier, test_ratio, hash):
+  return hash(np.int64(identifier)).digest()[-1] < 256 * test_ratio          # Basically is the identifier int less that the test percent.
+  
+def split_train_test_by_id(data, test_ratio, id_column, hash=hashlib.md5):
+  ids = data[id_column]
+  in_test_set = ids.apply(lamda id_:test_set_check(id_, test_ratio, hash))   # Call to previous def
+  return data.loc[~in_test_set], data.loc[in_test_set]
+  
+  #####
+  #Createing IDs per column
+  housing_with_id = housing.reset_index()                                    # Add index column
+  train_set, test_set = split_train_test_by_id(housing_with_id, 0.2, "id")
