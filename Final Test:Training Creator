@@ -1,0 +1,53 @@
+###Import Statements
+import sys
+import csv
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+import numpy as np
+from sklearn.model_selection import StratifiedShuffleSplit
+
+
+###Feeding data into program
+housing = pd.read_csv('housing.txt')
+print("Here is the header of the imported data.")
+print(housing.head())
+
+
+#Use value_counts() to find out available catagories and what the distribution is.
+print("Here are the values and percents of buildings based on proximity to ocean.")
+print(housing["ocean_proximity"].value_counts())
+
+
+##Show a histogram of the whole dataset.
+#housing.hist(bins=50, figsize=(20,15))
+#plt.show()
+
+
+#Spliting the dataset based on median housing prices
+housing["income_cat"] = np.ceil(housing["median_income"] / 1.5)              #ceil:aka:ceiling
+housing["income_cat"].where(housing["income_cat"] < 5, 5.0, inplace=True)
+#housing["income_cat"].hist(bins=10, figsize=(20,15))
+#plt.show()
+
+
+#Spliting the data based on a stratisfied sampling based on income
+split = StratifiedShuffleSplit(n_splits=1,test_size=0.2,random_state=42)
+for train_index, test_index in split.split(housing, housing["income_cat"]):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set = housing.loc[test_index]
+
+
+print("")
+print("This is the data set based on income catagories 1-5")
+print(strat_test_set["income_cat"].value_counts() / len(strat_test_set))
+
+#Now remove the income_attribute from the data
+for set_ in (strat_train_set, strat_test_set):
+    set_.drop("income_cat", axis=1, inplace=True)
+
+#Here is the final training set
+print("")
+print("Final Training set")
+print(strat_train_set)
